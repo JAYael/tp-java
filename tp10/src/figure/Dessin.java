@@ -5,17 +5,17 @@ import java.util.List;
 
 public class Dessin {
 	
-	private List<Figure> _listeFigure;
+	private List<Figure> _listeFigures;
 	
 	public Dessin(){
-		_listeFigure = new ArrayList<Figure>();
+		_listeFigures = new ArrayList<Figure>();
 	}
 	
 	public boolean add(Figure figureAdd){
-		return _listeFigure.add(figureAdd);
+		return _listeFigures.add(figureAdd);
 	}
 	
 	public List<Figure> getFigures(){
-		return _listeFigure;
+		return _listeFigures;
 	}
 }

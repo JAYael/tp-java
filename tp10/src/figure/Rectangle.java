@@ -1,11 +1,15 @@
 package tp10.src.figure;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 public class Rectangle extends Figure implements Surfacable {	
 	private Point _pointDepart;
 	private int _longueur;
 	private int _largeur;
 	
-	public Rectangle(Point _pointDepart, int _longueur, int _largeur) {
+	public Rectangle(Couleur couleur,Point _pointDepart, int _longueur, int _largeur) {
+		super(couleur);
 		this._pointDepart = _pointDepart;
 		this._longueur = _longueur;
 		this._largeur = _largeur;
@@ -62,12 +66,43 @@ public class Rectangle extends Figure implements Surfacable {
 	}
 	
 	@Override
-	public Point[] getPoints() {
-		Point tab[] = new Point[4];
-		tab[0] = this.getPointBasGauche();
-		tab[1] = this.getPointBasDroite();
-		tab[2] = this.getPointHautGauche();
-		tab[3] = this.getPointHautDroite();
+	public Collection<Point> getPoints() {
+		Collection<Point> tab= new HashSet<Point>();
+		tab.add(this.getPointBasGauche());
+		tab.add(this.getPointBasDroite());
+		tab.add(this.getPointHautGauche());
+		tab.add(this.getPointHautDroite());
 		return tab;
 	}
+
+	@Override
+	public boolean couvre(Point point) {
+		if(point.get_x()<this.getPointBasGauche().get_x())
+			return false;
+		if(point.get_x()<this.getPointBasDroite().get_x())
+			return false;
+		if(point.get_y()<this.getPointHautGauche().get_y())
+			return false;
+		if(point.get_y()<this.getPointHautDroite().get_y())
+			return false;
+		return true;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Rectangle){
+			Rectangle other = (Rectangle) obj;
+			if (get_largeur() != other.get_largeur())
+				return false;
+			if (get_longueur() != other.get_longueur())
+				return false;
+			if (!get_pointDepart().equals(other.get_pointDepart()))
+				return false;
+			return true;
+		}
+		return false;
+	}
+	
+	
 }

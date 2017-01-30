@@ -1,5 +1,8 @@
 package tp10.src.figure;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 public class Segment extends Figure{
 
 	private Point _pointDepart;
@@ -10,7 +13,8 @@ public class Segment extends Figure{
 	
 	
 	
-	public Segment(Point pointDepart, int longueur, boolean horizontale) {
+	public Segment(Couleur couleur,Point pointDepart, int longueur, boolean horizontale) {
+		super(couleur);
 		this.set_pointDepart(pointDepart);
 		this.set_longueur(longueur);
 		this.set_horizontale(horizontale);
@@ -51,12 +55,48 @@ public class Segment extends Figure{
 	}
 	
 	@Override
-	public Point[] getPoints() {
+	public Collection<Point> getPoints() {
 //		Point tab[] = new Point[2];
 //		tab[0] = this.get_pointDepart();
 //		tab[1] = this.get_pointArriver();
 //		return tab;
-		return new Point[]{this.get_pointDepart(), this.get_pointArriver()};
+		Collection<Point> tab= new HashSet<Point>();
+		tab.add(this.get_pointDepart());
+		tab.add(this.get_pointArriver());
+		return tab;
 	}
+
+
+	@Override
+	public boolean couvre(Point p) {
+		if(p.get_x() < get_pointDepart().get_x()){
+			return false;
+		}
+		if(p.get_x() > get_pointArriver().get_x()){
+			return false;
+		}
+		if(p.get_y() < get_pointDepart().get_y()){
+			return false;
+		}
+		if(p.get_y() > get_pointArriver().get_y()){
+			return false;
+		}
+
+		return true;
+	}
+
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Segment){
+			Segment other = (Segment) obj;
+			if (get_pointDepart().equals(other.get_pointDepart()))
+				return false;
+			if (get_pointArriver().equals(other.get_pointArriver()))
+				return false;
+			return true;
+		}
+		return false;
+	}	
 
 }
